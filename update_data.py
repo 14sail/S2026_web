@@ -4,8 +4,8 @@ import json
 # 設定
 IMAGE_DIR = 'images'
 DATA_FILE = 'data.json'
-# 預設分類關鍵字（不分大小寫）
-CATEGORIES = ['About', 'Life', 'Camping']
+# 預設分類關鍵字
+CATEGORIES = ['Life', 'About', 'Camping']
 
 def get_category(folder_name):
     """根據資料夾名稱判斷分類"""
@@ -13,11 +13,22 @@ def get_category(folder_name):
     for cat in CATEGORIES:
         if cat.lower() in name_lower:
             return cat
-    return "Life"  # 找不到關鍵字時，預設歸類到 Life
+    return "Life"
 
 def format_title(folder_name):
-    """將資料夾名稱轉為漂亮的標題 (例如 life_2025s2 -> Life 2025 S2)"""
-    return folder_name.replace('_', ' ').title()
+    """
+    修改後的標題邏輯：
+    只保留年份與季度（例如 2025S2），移除 Life, Camping, About 等字眼。
+    """
+    title = folder_name.lower()
+    # 移除分類關鍵字與底線
+    for cat in CATEGORIES:
+        title = title.replace(cat.lower(), "")
+    
+    title = title.replace('_', '').replace('-', '').strip()
+    
+    # 將結果轉為大寫（例如 2025s2 -> 2025S2）
+    return title.upper()
 
 def update_gallery():
     if not os.path.exists(IMAGE_DIR):
@@ -27,9 +38,10 @@ def update_gallery():
     albums = []
     
     # 掃描 images 內的所有子資料夾
+    if not os.path.exists(IMAGE_DIR): return
     folders = [f for f in os.listdir(IMAGE_DIR) if os.path.isdir(os.path.join(IMAGE_DIR, f))]
     
-    # 排序，讓最新的相簿在前面
+    # 排序
     folders.sort(reverse=True)
 
     for folder in folders:
@@ -43,11 +55,10 @@ def update_gallery():
         ]
         
         if photos:
-            # 排序照片檔名
             photos.sort()
             
             albums.append({
-                "title": format_title(folder),
+                "title": format_title(folder), # 這裡會產生 2025S2
                 "category": get_category(folder),
                 "photos": photos
             })
@@ -56,8 +67,7 @@ def update_gallery():
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump({"albums": albums}, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ 更新完成！共偵測到 {len(albums)} 個相簿。")
-    print(f"📁 已更新至 {DATA_FILE}")
+    print(f"✅ 更新完成！標題已統一為年季格式（如：2025S2）。")
 
 if __name__ == "__main__":
     update_gallery()
