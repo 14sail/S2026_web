@@ -28,7 +28,7 @@ def format_title(folder_name):
     title = title.replace('_', '').replace('-', '').strip()
     
     # 將結果轉為大寫（例如 2025s2 -> 2025S2）
-    return title.upper()
+    return title #.upper()
 
 def update_gallery():
     if not os.path.exists(IMAGE_DIR):
