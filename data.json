@@ -1,20 +1,13 @@
 {
   "albums": [
     {
-      "title": "2025 S1 - Life",
+      "title": "2025 S2 Collection",
       "category": "Life",
-      "cover": "images/cover1.jpg",
       "photos": [
-        "https://images.unsplash.com/photo-1493246507139-91e8bef99c02",
-        "https://images.unsplash.com/photo-1472214103451-9374bd1c798e"
-      ]
-    },
-    {
-      "title": "Camping Trip",
-      "category": "Camping",
-      "cover": "images/camping_cover.jpg",
-      "photos": [
-        "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4"
+        "images/2025s2/s__50216964_0.jpg",
+        "images/2025s2/s__50216965_0.jpg",
+        "images/2025s2/s__50216966_0.jpg",
+        "images/2025s2/s__50216967_0.jpg"
       ]
     }
   ]
