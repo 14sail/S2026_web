@@ -1,13 +1,31 @@
 {
   "albums": [
     {
-      "title": "2025 S2 Collection",
+      "title": "Life 2025S2",
       "category": "Life",
       "photos": [
-        "images/2025s2/s__50216964_0.jpg",
-        "images/2025s2/s__50216965_0.jpg",
-        "images/2025s2/s__50216966_0.jpg",
-        "images/2025s2/s__50216967_0.jpg"
+        "images/life_2025s2/s__50216964_0.jpg",
+        "images/life_2025s2/s__50216965_0.jpg",
+        "images/life_2025s2/s__50216966_0.jpg",
+        "images/life_2025s2/s__50216967_0.jpg"
+      ]
+    },
+    {
+      "title": "Life 2024S3",
+      "category": "Life",
+      "photos": [
+        "images/life_2024s3/S__50216974_0.jpg",
+        "images/life_2024s3/S__50216975_0.jpg",
+        "images/life_2024s3/S__50216976_0.jpg",
+        "images/life_2024s3/S__50216977_0.jpg"
+      ]
+    },
+    {
+      "title": "Camping 2026S1",
+      "category": "Camping",
+      "photos": [
+        "images/Camping_2026s1/S__50216969_0.jpg",
+        "images/Camping_2026s1/S__50216970_0.jpg"
       ]
     }
   ]

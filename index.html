@@ -70,13 +70,14 @@
     <script>
         async function init() {
             try {
-                // 讀取同目錄下的 data.json
                 const response = await fetch('data.json');
                 const data = await response.json();
                 render(data.albums);
+                // 預設開啟第一個分類
+                filterCategory('About');
             } catch (e) {
                 console.error("資料讀取失敗", e);
-                document.getElementById('content-container').innerHTML = "<p style='text-align:center;'>尚未上傳照片，請編輯 data.json</p>";
+                document.getElementById('content-container').innerHTML = "<p style='text-align:center;'>尚未上傳照片，請確認 data.json 路徑是否正確。</p>";
             }
         }
 
@@ -84,55 +85,46 @@
             const container = document.getElementById('content-container');
             const nav = document.getElementById('nav-container');
             
-            // 取得不重複的分類
-            const categories = ['All', ...new Set(albums.map(a => a.category))];
+            // 【強制固定這三個分類】
+            const categories = ['About', 'Life', 'Camping'];
 
-            // 產生分類導覽按鈕
             nav.innerHTML = categories.map(cat => 
-                `<button class="category-btn ${cat==='All'?'active':''}" onclick="filterCategory('${cat}')">${cat}</button>`
+                `<button class="category-btn" onclick="filterCategory('${cat}')">${cat}</button>`
             ).join('');
 
-            // 依照分類群組資料
             const grouped = {};
             albums.forEach(a => {
-                if (!grouped[a.category]) grouped[a.category] = [];
-                grouped[a.category].push(a);
+                const catKey = categories.find(c => c.toLowerCase() === a.category.toLowerCase());
+                if (catKey) {
+                    if (!grouped[catKey]) grouped[catKey] = [];
+                    grouped[catKey].push(a);
+                }
             });
 
-            // 產生各分類內容區塊
             let html = '';
-            for (let cat in grouped) {
-                html += `<div id="cat-${cat}" class="category-section">
+            categories.forEach(cat => {
+                html += `<div id="cat-${cat}" class="category-section" style="display:none;">
                     <h2 class="category-title">${cat}</h2>`;
-                
-                grouped[cat].forEach(album => {
-                    html += `<div class="album-group">
-                        <div class="album-subtitle">${album.title}</div>
-                        <div class="photo-grid">
-                            ${album.photos.map(p => `<div class="photo-card"><img src="${p}" loading="lazy"></div>`).join('')}
-                        </div>
-                    </div>`;
-                });
-                
+                if (grouped[cat]) {
+                    grouped[cat].forEach(album => {
+                        html += `<div class="album-group">
+                            <div class="album-subtitle">${album.title}</div>
+                            <div class="photo-grid">
+                                ${album.photos.map(p => `<div class="photo-card"><img src="${p}" loading="lazy"></div>`).join('')}
+                            </div>
+                        </div>`;
+                    });
+                } else {
+                    html += `<p style="color:#888;">Coming Soon...</p>`;
+                }
                 html += `</div>`;
-            }
+            });
             container.innerHTML = html;
         }
 
         function filterCategory(cat) {
-            // 更新按鈕樣式
-            document.querySelectorAll('.category-btn').forEach(b => {
-                b.classList.toggle('active', b.innerText === cat);
-            });
-
-            // 顯示/隱藏 分類區塊
-            document.querySelectorAll('.category-section').forEach(s => {
-                if (cat === 'All') {
-                    s.style.display = 'block';
-                } else {
-                    s.style.display = (s.id === `cat-${cat}`) ? 'block' : 'none';
-                }
-            });
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.toggle('active', b.innerText === cat));
+            document.querySelectorAll('.category-section').forEach(s => s.style.display = (s.id === `cat-${cat}`) ? 'block' : 'none');
         }
 
         init();
