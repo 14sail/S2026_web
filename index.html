@@ -4,61 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S2026 PHOTOGRAPHY</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prata&family=Inter:wght@300;600;800&family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f8f8f8;       /* 純淨淺灰底 */
-            --text-main: #1a1a1a;      /* 深沉黑 */
-            --text-sub: #888888;       /* 灰字 */
-            --accent: #000000;         /* 強調色 */
+            --bg-color: #ffffff;       /* 純白底，雜誌感標配 */
+            --text-main: #000000;      /* 純黑 */
+            --text-sub: #999999;       /* 淺灰 */
+            --line-color: #eeeeee;     /* 極淡細線 */
         }
 
-        /* 全域設定：取消所有斜體 */
+        /* 嚴格禁止斜體，統一比例 */
         * {
             font-style: normal !important; 
             box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: 'Montserrat', 'Noto Sans TC', sans-serif;
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
             margin: 0; padding: 0;
-            letter-spacing: 0.5px;
+            overflow-x: hidden;
         }
 
         header {
-            padding: 120px 20px 60px;
+            padding: 140px 20px 80px;
             text-align: center;
+            border-bottom: 1px solid var(--line-color);
         }
 
         h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 8px;
+            font-family: 'Prata', serif; /* 雜誌感核心字體 */
+            font-size: 3rem;
+            font-weight: 400;
+            letter-spacing: 12px;
             margin: 0;
+            text-transform: uppercase;
         }
 
-        /* 導覽列：只有 About, Life, Camping */
         .category-nav {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            margin-top: 50px;
+            gap: 50px;
+            margin-top: 60px;
         }
 
         .category-btn {
             background: none;
             border: none;
             color: var(--text-sub);
-            padding: 10px 0;
+            padding: 5px 0;
             cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 700;
+            font-size: 0.75rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            transition: 0.3s;
+            letter-spacing: 4px;
+            transition: 0.4s;
             position: relative;
         }
 
@@ -72,108 +74,106 @@
             content: '';
             position: absolute;
             width: 100%;
-            height: 2px;
-            bottom: 0;
+            height: 1px;
+            bottom: -5px;
             left: 0;
             background: var(--text-main);
         }
 
         .main-container {
-            max-width: 1400px;
-            margin: 0 auto 100px;
-            padding: 0 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 80px 40px;
         }
 
         .category-section {
-            display: none; /* 預設隱藏 */
-            animation: fadeIn 0.8s ease;
+            display: none;
+            animation: fadeIn 1s ease both;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .category-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 60px;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            color: var(--text-sub);
+            display: none; /* 導覽列已有，標題隱藏讓版面更乾淨 */
         }
 
-        .album-group { margin-bottom: 100px; }
+        .album-group { 
+            margin-bottom: 160px; 
+        }
 
         .album-subtitle {
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 30px;
+            font-family: 'Prata', serif;
+            font-size: 1.8rem;
+            margin-bottom: 50px;
+            text-align: center;
             color: var(--text-main);
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
         }
 
+        /* 雜誌排版通常強調不對齊或大網格 */
         .photo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr); /* 雙欄排版最有雜誌感 */
+            gap: 30px;
+        }
+
+        .photo-card {
+            position: relative;
+            overflow: hidden;
+            background-color: #fafafa;
         }
 
         .photo-card img {
             width: 100%;
             height: auto;
             display: block;
-            transition: 0.5s;
+            transition: transform 1.2s cubic-bezier(0.15, 1, 0.3, 1);
         }
 
-        .photo-card img:hover {
-            opacity: 0.8;
+        .photo-card:hover img {
+            transform: scale(1.05);
         }
 
         footer {
             text-align: center;
-            padding: 60px;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
+            padding: 100px 20px;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
             color: var(--text-sub);
+            border-top: 1px solid var(--line-color);
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .photo-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 1.5rem; letter-spacing: 4px; }
-            .category-nav { gap: 20px; }
+            h1 { font-size: 2rem; letter-spacing: 6px; }
+            .category-nav { gap: 25px; }
+            .album-subtitle { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>S2026 COLLECTION</h1>
-        <div class="category-nav" id="nav-container">
-            </div>
+        <h1>S2026</h1>
+        <div class="category-nav" id="nav-container"></div>
     </header>
 
-    <div class="main-container" id="content-container">
-        </div>
+    <div class="main-container" id="content-container"></div>
 
-    <footer>Designed for S2026. No Italics.</footer>
+    <footer>2026 Editorial Archive &copy; All Rights Reserved.</footer>
 
     <script>
-        const CATEGORIES = ['About', 'Life', 'Camping'];
+        const CATEGORIES = ['Life', 'About', 'Camping'];
 
         async function init() {
             try {
                 const response = await fetch('data.json');
                 const data = await response.json();
                 render(data.albums);
-                
-                // 網頁進入時，預設點擊第一個 About
-                filterCategory('About');
+                filterCategory('Life');
             } catch (e) {
                 console.error("Fail:", e);
                 document.getElementById('content-container').innerHTML = "Check data.json formatting.";
@@ -184,12 +184,10 @@
             const container = document.getElementById('content-container');
             const nav = document.getElementById('nav-container');
 
-            // 產生導覽按鈕
             nav.innerHTML = CATEGORIES.map(cat => 
                 `<button class="category-btn" onclick="filterCategory('${cat}')">${cat}</button>`
             ).join('');
 
-            // 分組資料
             const grouped = {};
             albums.forEach(a => {
                 const catKey = CATEGORIES.find(c => c.toLowerCase() === a.category.toLowerCase());
@@ -199,12 +197,9 @@
                 }
             });
 
-            // 產生 HTML
             let html = '';
             CATEGORIES.forEach(cat => {
-                html += `<div id="cat-${cat}" class="category-section">
-                    <div class="category-title">${cat}</div>`;
-                
+                html += `<div id="cat-${cat}" class="category-section">`;
                 if (grouped[cat]) {
                     grouped[cat].forEach(album => {
                         html += `<div class="album-group">
@@ -215,7 +210,7 @@
                         </div>`;
                     });
                 } else {
-                    html += `<p style="text-align:center; color:#ccc; letter-spacing:2px;">NO CONTENT YET</p>`;
+                    html += `<p style="text-align:center; color:#ccc; letter-spacing:2px; padding: 100px 0;">CONTENT ARCHIVING</p>`;
                 }
                 html += `</div>`;
             });
