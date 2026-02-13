@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S2026 | Photography Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f1ea; 
+            --text-main: #111111;
+            --text-sub: #555555;
+            --line-color: #dcd9d0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+            margin: 0; padding: 0; line-height: 1.8;
+        }
+
+        header { padding: 100px 20px 40px; text-align: center; }
+        h1 { font-size: 3.5rem; font-weight: 600; margin: 0; font-style: italic; letter-spacing: -1px; }
+
+        .category-nav { display: flex; justify-content: center; gap: 30px; margin: 40px 0; flex-wrap: wrap; }
+        .category-btn {
+            background: none; border: none; color: var(--text-sub);
+            padding: 5px 0; cursor: pointer; font-size: 1rem;
+            text-transform: uppercase; font-family: inherit; position: relative;
+            transition: 0.3s;
+        }
+        .category-btn.active { color: var(--text-main); font-weight: bold; font-style: italic; }
+        .category-btn.active::after { content: ''; position: absolute; width: 100%; height: 1px; bottom: 0; left: 0; background: var(--text-main); }
+
+        .main-container { max-width: 1400px; margin: 0 auto 100px; padding: 0 40px; }
+        .category-section { margin-bottom: 120px; }
+        .category-title { font-size: 2.8rem; margin-bottom: 50px; border-left: 4px solid var(--text-main); padding-left: 20px; font-style: italic; }
+        
+        .album-group { margin-bottom: 80px; }
+        .album-subtitle { font-size: 1.2rem; letter-spacing: 2px; border-bottom: 1px solid var(--line-color); display: inline-block; margin-bottom: 30px; color: var(--text-sub); }
+
+        .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 50px; }
+        .photo-card img { width: 100%; height: auto; display: block; filter: grayscale(20%); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); cursor: zoom-in; }
+        .photo-card img:hover { filter: grayscale(0%); transform: scale(1.03); }
+
+        footer { text-align: center; padding: 100px 20px; font-size: 0.9rem; color: var(--text-sub); border-top: 1px solid var(--line-color); font-style: italic; letter-spacing: 1px; }
+
+        @media (max-width: 768px) { 
+            h1 { font-size: 2.5rem; } 
+            .photo-grid { grid-template-columns: 1fr; gap: 30px; }
+            .main-container { padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Photography</h1>
+        <div class="category-nav" id="nav-container">
+            <button class="category-btn active" onclick="filterCategory('All')">All</button>
+        </div>
+    </header>
+
+    <div class="main-container" id="content-container">
+        </div>
+
+    <footer>&copy; 2026 Collection. Crafted with Soul.</footer>
+
+    <script>
+        async function init() {
+            try {
+                // 讀取同目錄下的 data.json
+                const response = await fetch('data.json');
+                const data = await response.json();
+                render(data.albums);
+            } catch (e) {
+                console.error("資料讀取失敗", e);
+                document.getElementById('content-container').innerHTML = "<p style='text-align:center;'>尚未上傳照片，請編輯 data.json</p>";
+            }
+        }
+
+        function render(albums) {
+            const container = document.getElementById('content-container');
+            const nav = document.getElementById('nav-container');
+            
+            // 取得不重複的分類
+            const categories = ['All', ...new Set(albums.map(a => a.category))];
+
+            // 產生分類導覽按鈕
+            nav.innerHTML = categories.map(cat => 
+                `<button class="category-btn ${cat==='All'?'active':''}" onclick="filterCategory('${cat}')">${cat}</button>`
+            ).join('');
+
+            // 依照分類群組資料
+            const grouped = {};
+            albums.forEach(a => {
+                if (!grouped[a.category]) grouped[a.category] = [];
+                grouped[a.category].push(a);
+            });
+
+            // 產生各分類內容區塊
+            let html = '';
+            for (let cat in grouped) {
+                html += `<div id="cat-${cat}" class="category-section">
+                    <h2 class="category-title">${cat}</h2>`;
+                
+                grouped[cat].forEach(album => {
+                    html += `<div class="album-group">
+                        <div class="album-subtitle">${album.title}</div>
+                        <div class="photo-grid">
+                            ${album.photos.map(p => `<div class="photo-card"><img src="${p}" loading="lazy"></div>`).join('')}
+                        </div>
+                    </div>`;
+                });
+                
+                html += `</div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function filterCategory(cat) {
+            // 更新按鈕樣式
+            document.querySelectorAll('.category-btn').forEach(b => {
+                b.classList.toggle('active', b.innerText === cat);
+            });
+
+            // 顯示/隱藏 分類區塊
+            document.querySelectorAll('.category-section').forEach(s => {
+                if (cat === 'All') {
+                    s.style.display = 'block';
+                } else {
+                    s.style.display = (s.id === `cat-${cat}`) ? 'block' : 'none';
+                }
+            });
+        }
+
+        init();
+    </script>
+</body>
+</html>
