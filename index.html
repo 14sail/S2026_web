@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S2026 PHOTOGRAPHY</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700&family=Antonio:wght@300;700&family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #f8f8f8;       /* 純淨淺灰底 */
@@ -13,51 +13,53 @@
             --accent: #000000;         /* 強調色 */
         }
 
-        /* 全域設定：取消所有斜體 */
+        /* 嚴格取消所有斜體，統一比例 */
         * {
             font-style: normal !important; 
             box-sizing: border-box;
+            text-transform: none !important; /* 徹底移除自動大寫 */
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: 'Montserrat', 'Noto Sans TC', sans-serif;
+            font-family: 'Noto Sans TC', sans-serif;
             margin: 0; padding: 0;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.2px;
         }
 
         header {
-            padding: 120px 20px 60px;
+            padding: 140px 20px 60px;
             text-align: center;
         }
 
         h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 8px;
+            font-family: 'Bodoni Moda', serif;
+            font-size: 4.5rem; /* 放大主標題，展現修長美感 */
+            font-weight: 400;
+            letter-spacing: 2px;
             margin: 0;
+            line-height: 1;
         }
 
-        /* 導覽列：只有 About, Life, Camping */
+        /* 導覽列：使用修長的 Antonio 字體 */
         .category-nav {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            margin-top: 50px;
+            gap: 50px;
+            margin-top: 60px;
         }
 
         .category-btn {
+            font-family: 'Antonio', sans-serif;
             background: none;
             border: none;
             color: var(--text-sub);
-            padding: 10px 0;
+            padding: 5px 0;
             cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+            font-size: 1.2rem; /* 修長字體可以稍微大一點 */
+            font-weight: 300;
+            letter-spacing: 2px;
             transition: 0.3s;
             position: relative;
         }
@@ -66,87 +68,89 @@
 
         .category-btn.active {
             color: var(--text-main);
+            font-weight: 700;
         }
 
         .category-btn.active::after {
             content: '';
             position: absolute;
             width: 100%;
-            height: 2px;
-            bottom: 0;
+            height: 1px;
+            bottom: -2px;
             left: 0;
             background: var(--text-main);
         }
 
         .main-container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto 100px;
-            padding: 0 40px;
+            padding: 0 60px;
         }
 
         .category-section {
-            display: none; /* 預設隱藏 */
-            animation: fadeIn 0.8s ease;
+            display: none;
+            animation: fadeIn 1s ease forwards;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .category-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 60px;
+            font-family: 'Bodoni Moda', serif;
+            font-size: 2.5rem;
+            margin-bottom: 80px;
             text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 5px;
             color: var(--text-sub);
+            font-weight: 400;
         }
 
-        .album-group { margin-bottom: 100px; }
+        .album-group { margin-bottom: 120px; }
 
         .album-subtitle {
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 30px;
+            font-family: 'Bodoni Moda', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 40px;
             color: var(--text-main);
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
+            border-bottom: 1px solid var(--line-color);
+            padding-bottom: 15px;
         }
 
         .photo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr); /* 雙欄排版最有雜誌感 */
+            gap: 30px;
         }
 
         .photo-card img {
             width: 100%;
             height: auto;
             display: block;
-            transition: 0.5s;
+            transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
         }
 
-        .photo-card img:hover {
-            opacity: 0.8;
+        .photo-card:hover img {
+            opacity: 0.9;
+            transform: scale(1.01);
         }
 
         footer {
             text-align: center;
-            padding: 60px;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            padding: 100px 20px;
+            font-family: 'Antonio', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 5px;
             color: var(--text-sub);
+            border-top: 1px solid var(--line-color);
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .photo-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 1.5rem; letter-spacing: 4px; }
-            .category-nav { gap: 20px; }
+            h1 { font-size: 3rem; }
+            .main-container { padding: 0 20px; }
+            .category-nav { gap: 30px; }
         }
     </style>
 </head>
@@ -154,14 +158,12 @@
 
     <header>
         <h1>lyh___ty</h1>
-        <div class="category-nav" id="nav-container">
-            </div>
+        <div class="category-nav" id="nav-container"></div>
     </header>
 
-    <div class="main-container" id="content-container">
-        </div>
+    <div class="main-container" id="content-container"></div>
 
-    <footer>Designed for S2026. No Italics.</footer>
+    <footer>Designed for S2026. Editorial Archive.</footer>
 
     <script>
         const CATEGORIES = ['Life', 'About', 'Camping'];
@@ -171,8 +173,6 @@
                 const response = await fetch('data.json');
                 const data = await response.json();
                 render(data.albums);
-                
-                // 網頁進入時，預設點擊第一個 About
                 filterCategory('Life');
             } catch (e) {
                 console.error("Fail:", e);
@@ -184,12 +184,10 @@
             const container = document.getElementById('content-container');
             const nav = document.getElementById('nav-container');
 
-            // 產生導覽按鈕
             nav.innerHTML = CATEGORIES.map(cat => 
                 `<button class="category-btn" onclick="filterCategory('${cat}')">${cat}</button>`
             ).join('');
 
-            // 分組資料
             const grouped = {};
             albums.forEach(a => {
                 const catKey = CATEGORIES.find(c => c.toLowerCase() === a.category.toLowerCase());
@@ -199,7 +197,6 @@
                 }
             });
 
-            // 產生 HTML
             let html = '';
             CATEGORIES.forEach(cat => {
                 html += `<div id="cat-${cat}" class="category-section">
@@ -215,7 +212,7 @@
                         </div>`;
                     });
                 } else {
-                    html += `<p style="text-align:center; color:#ccc; letter-spacing:2px;">NO CONTENT YET</p>`;
+                    html += `<p style="text-align:center; color:#ccc; padding: 100px 0;">NO CONTENT YET</p>`;
                 }
                 html += `</div>`;
             });
