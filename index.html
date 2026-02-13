@@ -3,108 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S2026 | Photography Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <title>S2026 PHOTOGRAPHY</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+TC:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f4f1ea; 
-            --text-main: #111111;
-            --text-sub: #555555;
-            --line-color: #dcd9d0;
+            --bg-color: #f8f8f8;       /* 純淨淺灰底 */
+            --text-main: #1a1a1a;      /* 深沉黑 */
+            --text-sub: #888888;       /* 灰字 */
+            --accent: #000000;         /* 強調色 */
+        }
+
+        /* 全域設定：取消所有斜體 */
+        * {
+            font-style: normal !important; 
+            box-sizing: border-box;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: 'Playfair Display', 'Noto Serif TC', serif;
-            margin: 0; padding: 0; line-height: 1.8;
+            font-family: 'Montserrat', 'Noto Sans TC', sans-serif;
+            margin: 0; padding: 0;
+            letter-spacing: 0.5px;
         }
 
-        header { padding: 100px 20px 40px; text-align: center; }
-        h1 { font-size: 3.5rem; font-weight: 600; margin: 0; font-style: italic; letter-spacing: -1px; }
+        header {
+            padding: 120px 20px 60px;
+            text-align: center;
+        }
 
-        .category-nav { display: flex; justify-content: center; gap: 30px; margin: 40px 0; flex-wrap: wrap; }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin: 0;
+        }
+
+        /* 導覽列：只有 About, Life, Camping */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+        }
+
         .category-btn {
-            background: none; border: none; color: var(--text-sub);
-            padding: 5px 0; cursor: pointer; font-size: 1rem;
-            text-transform: uppercase; font-family: inherit; position: relative;
+            background: none;
+            border: none;
+            color: var(--text-sub);
+            padding: 10px 0;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
             transition: 0.3s;
+            position: relative;
         }
-        .category-btn.active { color: var(--text-main); font-weight: bold; font-style: italic; }
-        .category-btn.active::after { content: ''; position: absolute; width: 100%; height: 1px; bottom: 0; left: 0; background: var(--text-main); }
 
-        .main-container { max-width: 1400px; margin: 0 auto 100px; padding: 0 40px; }
-        .category-section { margin-bottom: 120px; }
-        .category-title { font-size: 2.8rem; margin-bottom: 50px; border-left: 4px solid var(--text-main); padding-left: 20px; font-style: italic; }
-        
-        .album-group { margin-bottom: 80px; }
-        .album-subtitle { font-size: 1.2rem; letter-spacing: 2px; border-bottom: 1px solid var(--line-color); display: inline-block; margin-bottom: 30px; color: var(--text-sub); }
+        .category-btn:hover { color: var(--text-main); }
 
-        .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 50px; }
-        .photo-card img { width: 100%; height: auto; display: block; filter: grayscale(20%); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); cursor: zoom-in; }
-        .photo-card img:hover { filter: grayscale(0%); transform: scale(1.03); }
+        .category-btn.active {
+            color: var(--text-main);
+        }
 
-        footer { text-align: center; padding: 100px 20px; font-size: 0.9rem; color: var(--text-sub); border-top: 1px solid var(--line-color); font-style: italic; letter-spacing: 1px; }
+        .category-btn.active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--text-main);
+        }
 
-        @media (max-width: 768px) { 
-            h1 { font-size: 2.5rem; } 
-            .photo-grid { grid-template-columns: 1fr; gap: 30px; }
-            .main-container { padding: 0 20px; }
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto 100px;
+            padding: 0 40px;
+        }
+
+        .category-section {
+            display: none; /* 預設隱藏 */
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--text-sub);
+        }
+
+        .album-group { margin-bottom: 100px; }
+
+        .album-subtitle {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            color: var(--text-main);
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 20px;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: 0.5s;
+        }
+
+        .photo-card img:hover {
+            opacity: 0.8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-sub);
+        }
+
+        @media (max-width: 768px) {
+            .photo-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.5rem; letter-spacing: 4px; }
+            .category-nav { gap: 20px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>My Photography</h1>
+        <h1>S2026 COLLECTION</h1>
         <div class="category-nav" id="nav-container">
-            <button class="category-btn active" onclick="filterCategory('All')">All</button>
-        </div>
+            </div>
     </header>
 
     <div class="main-container" id="content-container">
         </div>
 
-    <footer>&copy; 2026 Collection. Crafted with Soul.</footer>
+    <footer>Designed for S2026. No Italics.</footer>
 
     <script>
+        const CATEGORIES = ['About', 'Life', 'Camping'];
+
         async function init() {
             try {
                 const response = await fetch('data.json');
                 const data = await response.json();
                 render(data.albums);
-                // 預設開啟第一個分類
+                
+                // 網頁進入時，預設點擊第一個 About
                 filterCategory('About');
             } catch (e) {
-                console.error("資料讀取失敗", e);
-                document.getElementById('content-container').innerHTML = "<p style='text-align:center;'>尚未上傳照片，請確認 data.json 路徑是否正確。</p>";
+                console.error("Fail:", e);
+                document.getElementById('content-container').innerHTML = "Check data.json formatting.";
             }
         }
 
         function render(albums) {
             const container = document.getElementById('content-container');
             const nav = document.getElementById('nav-container');
-            
-            // 【強制固定這三個分類】
-            const categories = ['About', 'Life', 'Camping'];
 
-            nav.innerHTML = categories.map(cat => 
+            // 產生導覽按鈕
+            nav.innerHTML = CATEGORIES.map(cat => 
                 `<button class="category-btn" onclick="filterCategory('${cat}')">${cat}</button>`
             ).join('');
 
+            // 分組資料
             const grouped = {};
             albums.forEach(a => {
-                const catKey = categories.find(c => c.toLowerCase() === a.category.toLowerCase());
+                const catKey = CATEGORIES.find(c => c.toLowerCase() === a.category.toLowerCase());
                 if (catKey) {
                     if (!grouped[catKey]) grouped[catKey] = [];
                     grouped[catKey].push(a);
                 }
             });
 
+            // 產生 HTML
             let html = '';
-            categories.forEach(cat => {
-                html += `<div id="cat-${cat}" class="category-section" style="display:none;">
-                    <h2 class="category-title">${cat}</h2>`;
+            CATEGORIES.forEach(cat => {
+                html += `<div id="cat-${cat}" class="category-section">
+                    <div class="category-title">${cat}</div>`;
+                
                 if (grouped[cat]) {
                     grouped[cat].forEach(album => {
                         html += `<div class="album-group">
@@ -115,7 +215,7 @@
                         </div>`;
                     });
                 } else {
-                    html += `<p style="color:#888;">Coming Soon...</p>`;
+                    html += `<p style="text-align:center; color:#ccc; letter-spacing:2px;">NO CONTENT YET</p>`;
                 }
                 html += `</div>`;
             });
@@ -125,6 +225,7 @@
         function filterCategory(cat) {
             document.querySelectorAll('.category-btn').forEach(b => b.classList.toggle('active', b.innerText === cat));
             document.querySelectorAll('.category-section').forEach(s => s.style.display = (s.id === `cat-${cat}`) ? 'block' : 'none');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         init();
